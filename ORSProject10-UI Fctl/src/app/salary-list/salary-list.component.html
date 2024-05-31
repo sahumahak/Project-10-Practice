@@ -1,0 +1,131 @@
+<app-navbar></app-navbar>
+<div class="content-wrapper" style="padding-top: 3%;padding-bottom: 15%;
+background: url(assets/files/wall.jpg) no-repeat center center;
+ background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;width:auto;
+  height: 90vh;">
+  <div class="container-fluid">
+
+    <div class="panel panel-primary">
+      <div class="panel-heading" style="height: 70px;">
+        <div class="text-center">
+          <h1 class="text-white font-weight-bold">{{'Salary List' | translate }}</h1>
+        </div>
+      </div>
+
+      <div class="row p-1">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2.5">
+          <input type="text" class="form-control" [(ngModel)]="form.searchParams.employee"
+            placeholder="{{'Search EmployeeName' | translate}}">
+
+        </div>
+
+        
+        <div class="col-sm-2">
+          <input type="date" class="form-control" [(ngModel)]="form.searchParams.date"
+            placeholder="{{'Search SalaryDate' | translate}}">
+        </div>
+        <div class="col-sm-2">
+            <select class="form-control" id="status" name="status" [(ngModel)]="form.searchParams.status">
+              <option [ngValue]="" value="undefined">{{' Select Status' | translate }}</option>
+              <option value="Active">{{'Active' | translate }} </option>
+              <option value="Inactive">{{'Inactive' | translate }} </option>
+            </select>
+            
+        </div>
+
+
+
+        <div class="col-sm-1 ml-3">
+          <button (click)="submit()" class="btn btn-primary">
+            {{'Search' | translate }}</button>
+        </div>
+        <div class="col-lg-2 ml-4">
+          <button (click)="forward('/salary')" type="button" class="btn btn-success">{{'Add Salary' | translate}}
+          </button>
+        </div>
+
+        <div class="col-sm-1">
+          <button (click)="deleteMany()" class="btn btn-danger">
+            {{'Delete'| translate}}</button>
+        </div>
+      </div>
+
+
+      <div *ngIf="form.error" class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{form.message}}
+      </div>
+      <div *ngIf="!form.error && form.message != null" class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{form.message}}
+      </div>
+
+      <div class="p-1">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover font-weight-bold text-black">
+            <thead class="thead-light text-uppercase">
+              <tr>
+                <th><input type="checkbox" [(ngModel)]="isMasterSel" name="list_name" value="h1"
+                    (change)="checkUncheckAll($event)" /></th>
+                <th>{{'S.No.' | translate }}</th>
+                <th>{{'EmployeeName' | translate }}</th>
+                <th>{{'SalaryAmount' | translate }}</th>
+                <th>{{'SalaryDate' | translate }}</th>
+                <th>{{'Status' | translate }}</th>
+                <th>{{'Edit' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let m of form.list; let i = index">
+                <td> <input type="checkbox" #checkboxes (change)="checklistUpdate()" name="list_name" id="{{m.id}}"
+                    value="{{isMasterSel}}" />
+                </td>
+                <td> {{(form.pageNo*5)+i+ 1}} </td>
+                <td> {{ m.employee }} </td>
+                <td> {{ m.amount }} </td>
+                <td> {{ m.date }} </td>
+                <td> {{ m.status }} </td>
+                <td>
+                  <a (click)="forward( '/salary/' +  m.id)" style="cursor: pointer;">
+                    <i class="fa fa-edit text-info"></i>
+                  </a>
+                  <!-- /
+                  <a (click)="delete(m.id)" style="cursor: pointer;">
+                    <i class="fa fa-trash text-danger"></i>
+                  </a> -->
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+          <table style="width: 100%;">
+            <tr>
+              <td style="width: 50%;">
+                <button (click)="previous()" [disabled]="form.pageNo == 0" class="btn btn-info"> {{'Previous' |
+                  translate
+                  }} </button>
+              </td>
+              <td *ngIf="form.list.length!=0" style="width: 50%;"></td>
+              <td *ngIf="form.list.length==0" style="width: 50%;"><a class="btn btn-warning mr-1"
+                  [routerLink]="['/salarylist']" (click)="exit()">{{'Back' | translate}}</a></td>
+
+
+
+              <td><button (click)="next()" [disabled]="nextList==0" type="button" class="btn btn-info"> {{'Next' |
+                  translate }}</button></td>
+            </tr>
+          </table>
+
+
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,156 @@
+<app-navbar></app-navbar>
+<style>
+  .grad {
+    background-image: linear-gradient(to bottom right, #001a33(32, 168, 168), rgb(219, 231, 237));
+    background-repeat: no-repeat;
+    background-size: 100%;
+    padding-bottom: 25px;
+  }
+
+  .log1 {
+    padding-top: 13%;
+  }
+
+  .input-group-addon {
+    box-shadow: 9px 8px 7px #001a33;
+  }
+
+  .required-field {
+    color: red;
+    font-weight: bold;
+  }
+
+  .alertRedColor {
+    color: red;
+  }
+
+  .card-body {
+    padding: 2rem;
+  }
+
+  .input-group-text i {
+    width: 1.5rem;
+  }
+
+  .btn-primary,
+  .btn-success,
+  .btn-warning {
+    width: 100%;
+  }
+
+  .form-control {
+    height: calc(2.25rem + 2px);
+  }
+</style>
+
+<div class="row" style="
+  padding: 2% 0;
+  background: url('assets/files/wall.jpg') no-repeat center center;
+  background-attachment: fixed;
+  background-size: cover;
+  width: 100%;
+  height: auto;">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body input-group-addon grad">
+        <form name="userForm">
+          <h2 *ngIf="!form.data.id" class="text-primary font-weight-bold text-center">{{ 'Add Client' | translate }}
+          </h2>
+          <h2 *ngIf="form.data.id" class="text-primary font-weight-bold text-center">{{ 'Update Client' | translate }}
+          </h2>
+
+          <div *ngIf="!form.error && form.message" class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ form.message }}
+          </div>
+
+          <div *ngIf="form.error && form.message" class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ form.message }}
+          </div>
+          <div class="form-group">
+            <label><b>{{ 'Client Name' | translate }}</b><span class="required-field">*</span></label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-envelope grey-text"></i></div>
+              </div>
+              <input type="text" name="clientName" [(ngModel)]="form.data.clientName" class="form-control"
+                placeholder="{{ 'Enter Client Name' | translate }}">
+            </div> <span *ngIf="form.inputerror!=clientName" class="alertRedColor">{{form.inputerror.clientName}}</span>
+          </div>
+
+          <div class="form-group">
+            <label><b>{{ 'Client Address' | translate }}</b><span class="required-field">*</span></label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-user grey-text"></i></div>
+              </div>
+              <input type="text" name="address" [(ngModel)]="form.data.clientAddress" class="form-control"
+                placeholder="{{ 'Enter Client Address' | translate }}">
+            </div>
+            <span *ngIf="form.inputerror!=clientAddress" class="alertRedColor">{{form.inputerror.clientAddress}}</span>
+          </div>
+
+          <div>
+            <span class="pt-2"><b>{{'PriorityName' | translate }}</b>
+              <span class="required-field"></span></span>
+
+            
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-venus grey-text"></i> </div>
+                </div>
+                <select class="form-control" name="priorityName" id="clientName" [(ngModel)]="form.data.priorityName"
+                  style="cursor: pointer;">
+                  <option [ngValue]="" value="undefined">{{'Please PriorityName' | translate }}</option>
+                  <option value="High">{{'High' | translate }} </option>
+                  <option value="Low">{{'Low' | translate }} </option>
+                  <option value="Medium">{{'Medium' | translate }} </option>
+                </select>
+              </div>
+            </div><span *ngIf="form.inputerror.priorityName != null" class="alertRedColor" style=" color: red;"> {{form.inputerror.priorityName}} </span>
+            <!-- <span class="alertRedColor"> {{form.inputerror.gender}} </span> -->
+    
+
+
+          <div class="form-group">
+            <label><b>{{ 'Client Phone' | translate }}</b><span class="required-field">*</span></label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-phone grey-text"></i></div>
+              </div>
+              <input type="number" name="number" maxlength="10" [(ngModel)]="form.data.clientPhone" class="form-control"
+                placeholder="{{ 'Enter Client Phone' | translate }}">
+            </div>
+            <span *ngIf="form.inputerror!=clientPhone" class="alertRedColor">{{form.inputerror.clientPhone}}</span>
+          </div>
+          <div class="row pt-2 pl-2 pb-3">
+
+            <div class="col-md-3"></div>
+    
+    
+            <div class="pt-2">
+              <button *ngIf="!form.data.id>0" (click)="onUpload()" class="btn btn-success mr-2">
+                {{'Save' | translate }}</button>
+            </div>
+    
+            <div class="col-md-1"></div>
+    
+            <div class="pt-2">
+              <button *ngIf="form.data.id>0" (click)="onUpload()" class="btn btn-success mr-2">
+                {{'Update' | translate }}</button>
+            </div>
+            <div class="pt-2">
+              <a class="btn btn-warning mr-1" type="button" [routerLink]="['/clientlist']"
+                style="text-decoration: none; color: white;">{{'List' | translate }}</a>
+            </div>
+          </div>
+    
+    
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    <app-footer></app-footer>
